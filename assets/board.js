@@ -1,4 +1,5 @@
-  var turnsLeft = 9;
+var Outcomes = { LOST:-1, CONTINUE:0, WON:1};
+var turnsLeft = 9;
   var agentsLeft = 15;
   var board = [];
 /*
@@ -25,13 +26,13 @@ function Square(word, role1, role2) {
   this.role2 = role2;
   this.exposed = false;
 }
-//------------------------------------------------------------------
+/*-----------------------------------------------------------------
+|  reurn won:boolean
+\-----------------------------------------------------------------*/
 function agentHit(item) {
   $(item).addClass("agent");
   agentsLeft--;
-  if (agentsLeft == 0) {
-      // won
-  }
+  return (agentsLeft == 0);
 }
 //------------------------------------------------------------------
 function bystanderHit(item) {
@@ -42,21 +43,28 @@ function assassinHit(item) {
   $(item).addClass("assassin");
   alert("Game is Lost");
 }
-//------------------------------------------------------------------
+/* /------------------------------------------------------------------
+   |  return outcome:Outcomes (WON, LOST, CONTINUE) and endTurn:boolean
+   \------------------------------------------------------------------*/
 function squareHit(event) {
-    turnsLeft--;
-    item = event.target;
+    var endTurn = true;
+    var outcome = Outcomes.CONTINUE;
+    var item = event.target;
     $(this).removeClass('unexposed');
     console.log($(this).classList);
-    word = $(this).text()
+    var word = $(this).text()
     console.log(word);
     
     switch(roleD[word]) {
         case 'agent':
-           agentHit(item);
+           endTurn = false;
+           if (agentHit(item)) {
+             outcome = Outcomes.WON;
+           }
            break;
         case 'assassin':
            assassinHit(item);
+           outcome = Outcomes.LOST;
            break;
         case 'bystander':
            bystanderHit(item);
@@ -66,13 +74,14 @@ function squareHit(event) {
            break;
     }        
    $(this).prop('disabled', true);
+   return { endTurn:endTurn, outcome:outcome };
 //  
 }
 /*------------------------------------------------------------------
     returns isSpymaster
-*------------------------------------------------------------------/
+*------------------------------------------------------------------*/
 function makeBoard() {
-  i = 0;
+  var i = 0;
   words.forEach(function(word,i) {
     board.push(new Square(word, role1[i], role2[i]));
     square = $('.item'+ (i+1)).first();
