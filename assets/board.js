@@ -1,3 +1,4 @@
+"use strict";
 var Outcomes = { LOST:-1, CONTINUE:0, WON:1};
 var turnsLeft = 9;
   var agentsLeft = 15;
