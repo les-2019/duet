@@ -68,7 +68,9 @@ function squareHit(event) {
    $(this).prop('disabled', true);
 //  
 }
-//------------------------------------------------------------------
+/*------------------------------------------------------------------
+    returns isSpymaster
+*------------------------------------------------------------------/
 function makeBoard() {
   i = 0;
   words.forEach(function(word,i) {
@@ -81,8 +83,15 @@ function makeBoard() {
   });
      
   $('.item').click(squareHit);
+  return roleD == role1D;
 }
 //------------------------------------------------------------------
 $(document).ready(function() {
-  makeBoard();
+  isSpymaster = makeBoard();
+  while (roleD == role1D) {
+       spymaster();
+  } 
+  while (roleD == role2D) {
+        player();
+  }
 });
