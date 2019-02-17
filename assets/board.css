@@ -1,0 +1,35 @@
+.words {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 5rem);
+  grid-gap: 20px;
+}
+
+#id1 {
+  display: block;
+  left: 0;
+  right: 0;
+}
+.exposed {
+ color: white; !important
+}
+
+.agent {
+  background: green;
+  color: white; !important
+}
+
+.assassin {
+   background: black;
+   color: white; !important
+}
+
+.bystander {
+   background: gray;
+   color: white; !important
+}
+
+.unexposed {
+   background: SeaShell;
+   color: black; !important
+}
